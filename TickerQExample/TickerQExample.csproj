@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="TickerQ" Version="2.4.4" />
+    <PackageReference Include="TickerQ.Dashboard" Version="2.4.4" />
+    <PackageReference Include="TickerQ.EntityFrameworkCore" Version="2.4.4" />
   </ItemGroup>
 
 </Project>
