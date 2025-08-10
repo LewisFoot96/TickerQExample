@@ -1,8 +1,12 @@
-using TickerQExample;
 using Microsoft.EntityFrameworkCore;
+using TickerQ.Dashboard.DependencyInjection;
 using TickerQ.DependencyInjection;
 using TickerQ.EntityFrameworkCore.DependencyInjection;
-using TickerQ.Dashboard.DependencyInjection;
+using TickerQ.Utilities;
+using TickerQ.Utilities.Enums;
+using TickerQ.Utilities.Interfaces.Managers;
+using TickerQ.Utilities.Models.Ticker;
+using TickerQExample;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,5 +38,22 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseTickerQ();
+
+app.MapGet("/send-welcome", async (ITimeTickerManager<TimeTicker> timeTickerManager, CancellationToken ct) =>
+{
+    await timeTickerManager.AddAsync(new TimeTicker
+    {
+        Function = nameof(MyJobs.SendWelcome),
+        ExecutionTime = DateTime.UtcNow.AddSeconds(1),
+        Request = TickerHelper.CreateTickerRequest<string>("User123"),
+        Retries = 3,
+        RetryIntervals = [30, 60, 120], // Retry after 30s, 60s, then 2min
+
+        // Optional batching
+        //BatchParent = Guid.Parse("...."),
+        //BatchRunCondition = BatchRunCondition.OnSuccess
+    });
+    return Results.Ok();
+});
 
 app.Run();
