@@ -26,6 +26,9 @@ namespace TickerQExample
             // Implement log cleanup logic here
         }
 
+        [TickerFunction("ExceptionExample")]
+        public void ThrowExceptionExample() => throw new Exception(message: "An example exception occurred in the job.");
+
         [TickerFunction(functionName: "SendWelcome")]
         public Task SendWelcome(TickerFunctionContext<string> tickerContext, CancellationToken ct)
         {

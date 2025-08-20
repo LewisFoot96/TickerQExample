@@ -3,10 +3,11 @@ using TickerQ.Dashboard.DependencyInjection;
 using TickerQ.DependencyInjection;
 using TickerQ.EntityFrameworkCore.DependencyInjection;
 using TickerQ.Utilities;
-using TickerQ.Utilities.Enums;
 using TickerQ.Utilities.Interfaces.Managers;
 using TickerQ.Utilities.Models.Ticker;
 using TickerQExample;
+
+//Link to repo: https://tickerq.arcenox.com/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+//Db for persistence of TickerQ data
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseNpgsql("Host=localhost;Port=5432;Database=scheduling;Username=postgres;Password=Rockyts3905ts!"));
 
@@ -56,4 +58,4 @@ app.MapGet("/send-welcome", async (ITimeTickerManager<TimeTicker> timeTickerMana
     return Results.Ok();
 });
 
-app.Run();
+await app.RunAsync();
