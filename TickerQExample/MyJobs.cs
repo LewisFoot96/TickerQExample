@@ -35,5 +35,11 @@ namespace TickerQExample
             Console.WriteLine(tickerContext.Request); // Output: User123
             return Task.CompletedTask;
         }
+
+        [TickerFunction(functionName: "LongRunningJob")]
+        public async Task LongRunning(TickerFunctionContext<string> tickerContext, CancellationToken ct)
+        {
+            await Task.Delay(30000, ct); // Output: User123         
+        }
     }
 }
