@@ -39,7 +39,7 @@ namespace TickerQExample
         [TickerFunction(functionName: "LongRunningJob")]
         public async Task LongRunning(TickerFunctionContext<string> tickerContext, CancellationToken ct)
         {
-            await Task.Delay(30000, ct); // Output: User123         
+            await Task.Delay(30000, ct);      
         }
     }
 }
